@@ -29,7 +29,7 @@ from snakemake_interface_common.exceptions import WorkflowError
 @dataclass
 class ExecutorSettings(ExecutorSettingsBase):
     url: Optional[str] = field(
-        default=None, 
+        default=None,
         metadata={
             "help": "URL of TES server",
             "required": True,
@@ -40,22 +40,23 @@ class ExecutorSettings(ExecutorSettingsBase):
         metadata={
             "help": "TES username (either specify this or token)",
             "env_var": True,
-        }
+        },
     )
     password: Optional[str] = field(
         default=None,
         metadata={
             "help": "TES password (either specify this or a token)",
             "env_var": True,
-        }
+        },
     )
     token: Optional[str] = field(
         default=None,
         metadata={
             "help": "TES token (either specify this or a user/password)",
             "env_var": True,
-        }
+        },
     )
+
 
 # Required:
 # Specify common settings shared by various executors.
@@ -121,7 +122,7 @@ class Executor(RemoteExecutor):
             self.logger.info(f"[TES] Task submitted: {tes_id}")
         except Exception as e:
             raise WorkflowError(e)
-        
+
         self.report_job_submission(
             SubmittedJobInfo(
                 job=job,
@@ -155,7 +156,7 @@ class Executor(RemoteExecutor):
         ]
 
         for j in active_jobs:
-            async with self.status_rate_limiter:  # TODO: this doesn't seem to do anything?
+            async with self.status_rate_limiter:
                 res = self.tes_client.get_task(j.external_jobid, view="MINIMAL")
                 self.logger.debug(
                     "[TES] State of task '{id}': {state}".format(
@@ -184,7 +185,7 @@ class Executor(RemoteExecutor):
 
     def get_job_exec_prefix(self, job: ExecutorJobInterface):
         return "mkdir /tmp/conda && cd /tmp"
-    
+
     def _check_file_in_dir(self, checkdir, f):
         if checkdir:
             checkdir = checkdir.rstrip("/")
