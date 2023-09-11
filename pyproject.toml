@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "snakemake-executor-plugin-tes"
 version = "0.1.0"
-description = "A Snakemake executor plugin for running workflows via GA4GH TES."
+description = "A Snakemake executor plugin for submitting jobs via GA4GH TES."
 authors = [
     "Sven Twardziok <sven.twardziok@bih-charite.de>",
     "Alex Kanitz <alexander.kanitz@alumni.ethz.ch>",
