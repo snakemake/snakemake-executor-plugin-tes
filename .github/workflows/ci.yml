@@ -82,7 +82,7 @@ jobs:
 
       - name: Start funnel
         run: |
-          ./funnel server run
+          ./funnel server run &
       
       - name: Test funnel server
         run: |
