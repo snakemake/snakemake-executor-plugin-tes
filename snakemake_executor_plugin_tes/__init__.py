@@ -160,7 +160,7 @@ class Executor(RemoteExecutor):
                 res = self.tes_client.get_task(j.external_jobid, view="MINIMAL")
                 self.logger.debug(
                     "[TES] State of task '{id}': {state}".format(
-                        id=j.jobid, state=res.state
+                        id=j.external_jobid, state=res.state
                     )
                 )
                 if res.state in UNFINISHED_STATES:
@@ -332,7 +332,7 @@ class Executor(RemoteExecutor):
                     "/bin/bash",
                     os.path.join(self.container_workdir, "run_snakemake.sh"),
                 ],
-                workdir=self.container_workdir,
+                workdir=str(self.container_workdir),
             )
         )
         return executors
