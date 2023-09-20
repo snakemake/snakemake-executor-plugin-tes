@@ -17,7 +17,7 @@ from snakemake_interface_executor_plugins import ExecutorSettingsBase, CommonSet
 from snakemake_interface_executor_plugins.workflow import WorkflowExecutorInterface
 from snakemake_interface_executor_plugins.logging import LoggerExecutorInterface
 from snakemake_interface_executor_plugins.jobs import (
-    ExecutorJobInterface,
+    JobExecutorInterface,
 )
 from snakemake_interface_common.exceptions import WorkflowError
 
@@ -103,7 +103,7 @@ class Executor(RemoteExecutor):
             password=self.workflow.executor_settings.password,
         )
 
-    def run_job(self, job: ExecutorJobInterface):
+    def run_job(self, job: JobExecutorInterface):
         # Implement here how to run a job.
         # You can access the job's resources, etc.
         # via the job object.
@@ -183,7 +183,7 @@ class Executor(RemoteExecutor):
                     "already in a terminal state."
                 )
 
-    def get_job_exec_prefix(self, job: ExecutorJobInterface):
+    def get_job_exec_prefix(self, job: JobExecutorInterface):
         return "mkdir /tmp/conda && cd /tmp"
 
     def _check_file_in_dir(self, checkdir, f):
@@ -250,7 +250,7 @@ class Executor(RemoteExecutor):
         self.logger.warning(members)
         return model(**members)
 
-    def _get_task_description(self, job: ExecutorJobInterface):
+    def _get_task_description(self, job: JobExecutorInterface):
         description = ""
         if job.is_group():
             msgs = [i.message for i in job.jobs if i.message]
@@ -262,7 +262,7 @@ class Executor(RemoteExecutor):
 
         return description
 
-    def _get_task_inputs(self, job: ExecutorJobInterface, jobscript, checkdir):
+    def _get_task_inputs(self, job: JobExecutorInterface, jobscript, checkdir):
         inputs = []
 
         # add workflow sources to inputs
@@ -304,7 +304,7 @@ class Executor(RemoteExecutor):
                 outputs.append(obj)
         return outputs
 
-    def _get_task_outputs(self, job: ExecutorJobInterface, checkdir):
+    def _get_task_outputs(self, job: JobExecutorInterface, checkdir):
         outputs = []
         # add output files to outputs
         outputs = self._append_task_outputs(outputs, job.output, checkdir)
@@ -333,7 +333,7 @@ class Executor(RemoteExecutor):
         )
         return executors
 
-    def _get_task(self, job: ExecutorJobInterface, jobscript):
+    def _get_task(self, job: JobExecutorInterface, jobscript):
         checkdir, _ = os.path.split(self.snakefile)
 
         task = {}
