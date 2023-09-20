@@ -321,9 +321,13 @@ class Executor(RemoteExecutor):
 
     def _get_task_executors(self):
         executors = []
+        self.logger.debug(
+            "[TES] Container image: "
+            f"{self.workflow.remote_execution_settings.container_image}"
+        )
         executors.append(
             tes.models.Executor(
-                image=self.container_image,
+                image=self.workflow.remote_execution_settings.container_image,
                 command=[  # TODO: info about what is executed is opaque
                     "/bin/bash",
                     os.path.join(self.container_workdir, "run_snakemake.sh"),
