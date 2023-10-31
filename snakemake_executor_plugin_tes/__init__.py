@@ -13,9 +13,10 @@ import tes
 
 from snakemake_interface_executor_plugins.executors.base import SubmittedJobInfo
 from snakemake_interface_executor_plugins.executors.remote import RemoteExecutor
-from snakemake_interface_executor_plugins import ExecutorSettingsBase, CommonSettings
-from snakemake_interface_executor_plugins.workflow import WorkflowExecutorInterface
-from snakemake_interface_executor_plugins.logging import LoggerExecutorInterface
+from snakemake_interface_executor_plugins.settings import (
+    ExecutorSettingsBase,
+    CommonSettings,
+)
 from snakemake_interface_executor_plugins.jobs import (
     JobExecutorInterface,
 )
@@ -71,28 +72,19 @@ common_settings = CommonSettings(
     # filesystem (True) or not (False).
     # This is e.g. the case for cloud execution.
     implies_no_shared_fs=False,
+    pass_default_storage_provider_args=True,
+    pass_default_resources_args=True,
+    pass_envvar_declarations_to_cmd=True,
+    auto_deploy_default_storage_provider=True,
+    # wait a bit until TES backend has job info available
+    init_seconds_before_status_checks=40,
 )
 
 
 # Required:
 # Implementation of your executor
 class Executor(RemoteExecutor):
-    def __init__(
-        self,
-        workflow: WorkflowExecutorInterface,
-        logger: LoggerExecutorInterface,
-    ):
-        super().__init__(
-            workflow,
-            logger,
-            # configure behavior of RemoteExecutor below
-            # whether arguments for setting the remote provider shall  be passed to jobs
-            pass_default_remote_provider_args=True,
-            # whether arguments for setting default resources shall be passed to jobs
-            pass_default_resources_args=True,
-            # whether environment variables shall be passed to jobs
-            pass_envvar_declarations_to_cmd=True,
-        )
+    def __post_init__(self):
         self.container_workdir = Path("/tmp")
         self.tes_url = self.workflow.executor_settings.url
 
