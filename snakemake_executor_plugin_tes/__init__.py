@@ -158,6 +158,12 @@ class Executor(RemoteExecutor):
                 if res.state in UNFINISHED_STATES:
                     yield j
                 elif res.state in ERROR_STATES:
+                    # TODO remove this dbg code
+                    import sys
+                    print(
+                        open(os.environ["GITHUB_WORKSPACE"] + "/funnel.log").read(),
+                        file=sys.stderr,
+                    )
                     self.report_job_error(j)
                 elif res.state == "COMPLETE":
                     self.report_job_success(j)

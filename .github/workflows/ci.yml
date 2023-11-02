@@ -96,7 +96,7 @@ jobs:
 
       - name: Start funnel
         run: |
-          ./funnel server run --config tests/funnel.cfg &
+          (./funnel server run --config tests/funnel.cfg 2> funnel.log) &
       
       - name: Test funnel server
         run: |
