@@ -182,7 +182,7 @@ class Executor(RemoteExecutor):
                 )
 
     def get_job_exec_prefix(self, job: JobExecutorInterface):
-        return "mkdir /tmp/conda && cd /tmp && ls -l" # TODO remove dbg ls
+        return "mkdir /tmp/conda && cd /tmp"
 
     def _check_file_in_dir(self, checkdir, f):
         if checkdir:
@@ -262,20 +262,6 @@ class Executor(RemoteExecutor):
 
     def _get_task_inputs(self, job: JobExecutorInterface, jobscript, checkdir):
         inputs = []
-
-        # add workflow sources to inputs
-        for src in self.dag.get_sources():
-            # exclude missing, hidden, empty and build files
-            if (
-                not os.path.exists(src)
-                or os.path.basename(src).startswith(".")
-                or os.path.getsize(src) == 0
-                or src.endswith(".pyc")
-            ):
-                continue
-            inputs.append(
-                self._prepare_file(filename=src, checkdir=checkdir, pass_content=True)
-            )
 
         # add input files to inputs
         for i in job.input:
