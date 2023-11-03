@@ -182,7 +182,7 @@ class Executor(RemoteExecutor):
                 )
 
     def get_job_exec_prefix(self, job: JobExecutorInterface):
-        return "mkdir /tmp/conda && cd /tmp"
+        return "mkdir /tmp/conda && cd /tmp && ls -l" # TODO remove dbg ls
 
     def _check_file_in_dir(self, checkdir, f):
         if checkdir:
