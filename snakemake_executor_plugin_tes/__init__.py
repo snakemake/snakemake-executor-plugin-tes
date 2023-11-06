@@ -106,6 +106,7 @@ class Executor(RemoteExecutor):
 
         jobscript = self.get_jobscript(job)
         self.write_jobscript(job, jobscript)
+        self.logger.debug(f"[TES] Jobscript: {open(jobscript).read()}")
 
         # submit job here, and obtain job ids from the backend
         try:
