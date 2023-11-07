@@ -220,7 +220,7 @@ class Executor(RemoteExecutor):
         members = {}
 
         # Handle remote files
-        if iofile.is_storage:
+        if hasattr(iofile, "is_storage") and iofile.is_storage:
             return None
 
         # Handle local files
@@ -301,7 +301,7 @@ class Executor(RemoteExecutor):
 
         # add benchmark files to outputs
         if hasattr(job, "benchmark") and job.benchmark:
-            outputs = self._append_task_outputs(outputs, job.benchmark, checkdir)
+            outputs = self._append_task_outputs(outputs, [job.benchmark], checkdir)
 
         return outputs
 
