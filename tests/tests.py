@@ -9,7 +9,7 @@ class TestWorkflowsBase(snakemake.common.tests.TestWorkflowsMinioPlayStorageBase
 
     def get_executor(self) -> str:
         return "tes"
-    
+
     def get_assume_shared_fs(self) -> bool:
         return False
 

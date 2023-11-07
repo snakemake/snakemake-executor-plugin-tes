@@ -161,6 +161,7 @@ class Executor(RemoteExecutor):
                 elif res.state in ERROR_STATES:
                     # TODO remove this dbg code
                     import sys
+
                     print(
                         open(os.environ["GITHUB_WORKSPACE"] + "/funnel.log").read(),
                         file=sys.stderr,
@@ -205,7 +206,7 @@ class Executor(RemoteExecutor):
 
     def _prepare_file(
         self,
-        filename,
+        iofile,
         overwrite_path=None,
         checkdir=None,
         pass_content=False,
@@ -219,12 +220,12 @@ class Executor(RemoteExecutor):
         members = {}
 
         # Handle remote files
-        if hasattr(filename, "is_remote") and filename.is_remote:
+        if iofile.is_storage:
             return None
 
         # Handle local files
         else:
-            f = os.path.abspath(filename)
+            f = os.path.abspath(iofile)
 
             self._check_file_in_dir(checkdir, f)
 
@@ -266,14 +267,14 @@ class Executor(RemoteExecutor):
 
         # add input files to inputs
         for i in job.input:
-            obj = self._prepare_file(filename=i, checkdir=checkdir)
+            obj = self._prepare_file(iofile=i, checkdir=checkdir)
             if obj:
                 inputs.append(obj)
 
         # add jobscript to inputs
         inputs.append(
             self._prepare_file(
-                filename=jobscript,
+                iofile=jobscript,
                 overwrite_path=os.path.join(self.container_workdir, "run_snakemake.sh"),
                 checkdir=checkdir,
                 pass_content=True,
@@ -284,7 +285,7 @@ class Executor(RemoteExecutor):
 
     def _append_task_outputs(self, outputs, files, checkdir):
         for file in files:
-            obj = self._prepare_file(filename=file, checkdir=checkdir, type="Output")
+            obj = self._prepare_file(iofile=file, checkdir=checkdir, type="Output")
             if obj:
                 outputs.append(obj)
         return outputs
