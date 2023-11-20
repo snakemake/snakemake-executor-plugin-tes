@@ -13,7 +13,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 snakemake-interface-common = "^1.13.0"
-snakemake-interface-executor-plugins = "^7.0.0"
+snakemake-interface-executor-plugins = ">=7,<9"
 py-tes = "^0.4.2"
 
 
