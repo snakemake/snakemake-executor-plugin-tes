@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/snakemake/snakemake-executor-plugin-tes/compare/v0.1.0...v0.1.1) (2023-11-27)
+
+
+### Bug Fixes
+
+* adapt to interface changes ([575c1a3](https://github.com/snakemake/snakemake-executor-plugin-tes/commit/575c1a3dd291575c78f7e9cc3a1b9a42050cd077))
+* adapt to interface changes ([a5207c3](https://github.com/snakemake/snakemake-executor-plugin-tes/commit/a5207c33580b9b278aef9ec0b77f835ace139c55))
+
 ## 0.1.0 (2023-11-07)
 
 
