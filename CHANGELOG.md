@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.2](https://github.com/snakemake/snakemake-executor-plugin-tes/compare/v0.1.1...v0.1.2) (2023-12-08)
+
+
+### Bug Fixes
+
+* update deps ([1cda7ea](https://github.com/snakemake/snakemake-executor-plugin-tes/commit/1cda7ea4b41537a340dd286a6fc59563f461d7e9))
+
+
+### Documentation
+
+* update metadata ([d8657b3](https://github.com/snakemake/snakemake-executor-plugin-tes/commit/d8657b302c6ec97e529e05c3823e4076ddac94f9))
+
 ## [0.1.1](https://github.com/snakemake/snakemake-executor-plugin-tes/compare/v0.1.0...v0.1.1) (2023-11-27)
 
 
