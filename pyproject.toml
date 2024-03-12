@@ -17,7 +17,7 @@ keywords = ["snakemake", "plugin", "executor", "tes"]
 [tool.poetry.dependencies]
 python = "^3.11"
 snakemake-interface-common = "^1.14.0"
-snakemake-interface-executor-plugins = "^8.1.1"
+snakemake-interface-executor-plugins = "^9.0.0"
 py-tes = "^0.4.2"
 
 
