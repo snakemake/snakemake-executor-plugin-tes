@@ -165,10 +165,16 @@ class Executor(RemoteExecutor):
                     funnel_log = os.environ.get("GITHUB_WORKSPACE")
                     if funnel_log:
                         try:
-                             print(
-                                 open(funnel_log + "/funnel.log").read(),
-                                 file=sys.stderr,
-                             )
+                            with open(
+                                funnel_log + "/funnel.log",
+                                encoding="utf-8",
+                                errors="replace",
+                            ) as fh:
+                                log_text = fh.read()
+                            print(
+                                log_text,
+                                file=sys.stderr,
+                            )
                         except OSError:
                             pass
                     self.report_job_error(j)
