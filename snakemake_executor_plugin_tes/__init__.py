@@ -160,13 +160,22 @@ class Executor(RemoteExecutor):
                 if res.state in UNFINISHED_STATES:
                     yield j
                 elif res.state in ERROR_STATES:
-                    # TODO remove this dbg code
                     import sys
 
-                    print(
-                        open(os.environ["GITHUB_WORKSPACE"] + "/funnel.log").read(),
-                        file=sys.stderr,
-                    )
+                    tes_log = os.environ.get("GITHUB_WORKSPACE")
+                    if tes_log:
+                        try:
+                            log_path = Path(tes_log) / "funnel.log"
+                            with log_path.open(encoding="utf-8", errors="replace") as fh:
+                                log_text = fh.read()
+                            print(
+                                log_text,
+                                file=sys.stderr,
+                            )
+                        except OSError as e:
+                            self.logger.warning(
+                                "[TES] Could not read tes log %s: %s", log_path, e
+                            )
                     self.report_job_error(j)
                 elif res.state == "COMPLETE":
                     self.report_job_success(j)
