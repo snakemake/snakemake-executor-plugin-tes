@@ -162,21 +162,20 @@ class Executor(RemoteExecutor):
                 elif res.state in ERROR_STATES:
                     import sys
 
-                    funnel_log = os.environ.get("GITHUB_WORKSPACE")
-                    if funnel_log:
+                    tes_log = os.environ.get("GITHUB_WORKSPACE")
+                    if tes_log:
                         try:
-                            with open(
-                                funnel_log + "/funnel.log",
-                                encoding="utf-8",
-                                errors="replace",
-                            ) as fh:
+                            log_path = Path(tes_log) / "funnel.log"
+                            with log_path.open(encoding="utf-8", errors="replace") as fh:
                                 log_text = fh.read()
                             print(
                                 log_text,
                                 file=sys.stderr,
                             )
-                        except OSError:
-                            pass
+                        except OSError as e:
+                            self.logger.warning(
+                                "[TES] Could not read tes log %s: %s", log_path, e
+                            )
                     self.report_job_error(j)
                 elif res.state == "COMPLETE":
                     self.report_job_success(j)
